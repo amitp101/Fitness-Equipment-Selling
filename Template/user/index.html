@@ -1,0 +1,103 @@
+{% extends 'user/layout/master.html' %}
+{% block main %}
+{% load static %}
+    <!-- Start Slider -->
+    <div id="slides-shop" class="cover-slides">
+        <ul class="slides-container">
+            <li class="text-left">
+                <img src="{% static 'images/user/wpl1.jpeg' %}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br> Fitness Equipments</strong></h1>
+                                                       
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-center">
+                <img src="{% static 'images/user/wpl2.jpeg' %}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br>Fitness Equipments</strong></h1>
+                                              
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="text-right">
+                <img src="{% static 'images/user/wpl3.jpeg' %}" alt="">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1 class="m-b-20"><strong>Welcome To <br>Fitness Equipments</strong></h1>
+                                                    
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+       <div class="slides-navigation">
+            <a href="#" class="next"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+            <a href="#" class="prev"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+        </div>
+    </div>
+    <!-- End Slider -->
+    <!-- Start Categories  -->
+    <div class="categories-shop">
+        <div class="container">
+            <div class="row">
+                {% for x in product_data_last %}
+                <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="shop-cat-box">
+                        <img class="img-fluid" src="{{x.p_image}}" alt="{{x.p_image}}" style="height: 250px" />
+                        <a class="btn hvr-hover" href="/user/single_product/{{x.id}}">{{x.p_name}}</a>
+                    </div>
+                </div>
+                {% endfor %}
+                
+                                
+            </div>
+        </div>
+    </div>
+    <!-- End Categories -->
+
+    <!-- Start Products  -->
+    <div class="products-box">
+        <div class="container">
+            <div class="row special-list">
+                {% for x in product_data_all %}
+                <div class="col-lg-3 col-md-6 special-grid best-seller">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                              <img src="{{x.p_image}}" class="img-fluid" alt="Image" style="height :250px;">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="{% url 'productView' x.id %}" title="View"><i class="fa fa-eye"></i></a></li>
+                             </ul>
+                                <a class="cart" href="/user/cart/{{x.id}}">Add to Cart</a>
+                            </div>
+                        </div>
+                        <a href="/user/single_product"></a>
+                        <div class="why-text">
+                            <h4>{{x.p_name}}</h4>
+                            <h4>{{x.p_desc}}</h4>
+                            <h5> ₹{{x.p_price}}</h5>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                
+
+               
+
+               
+            </div>
+        </div>
+    </div>
+    <!-- End Products  -->
+
+   
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends 'admin1/layout/master.html' %}
+{% block main %}
+
+    <head>
+        {% load static %}
+        <script src="https://use.fontawesome.com/474c0a0c36.js"></script>
+    </head>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Dashboard</h1>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-info">
+                            <div class="inner">
+                                <h3>{{ order_count }}</h3>
+
+                                <p>New Orders</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-bag"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-success">
+                            <div class="inner">
+                                <h3>{{ payment }}<sup style="font-size: 20px"></sup></h3>
+
+                                <p>SuccessFull Payments</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-stats-bars"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-warning">
+                            <div class="inner">
+                                <h3>{{ users }}</h3>
+
+                                <p>User Registrations</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-person-add"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ review }}</h3>
+
+                                <p>Review</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                    <div class="col-lg-3 col-6">
+                        <!-- small box -->
+                        <div class="small-box bg-danger">
+                            <div class="inner">
+                                <h3>{{ contact_us }}</h3>
+
+                                <p>Contact Us</p>
+                            </div>
+                            <div class="icon">
+                                <i class="ion ion-pie-graph"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ./col -->
+                </div>
+                <!-- /.row -->
+                <!-- Main row -->
+
+                <form method="get">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title mt-sm-0">Filter Payment</h4>
+                        </div>
+                        <div class="card-body">
+
+                            <table class="table table-bordered border-secondary">
+                                <tr>
+                                    <th>{{ order_f.form.price_less_than.label }}</th>
+                                    <td>{{ order_f.form.price_less_than }}</td>
+                                    <th>{{ order_f.form.price_greater_than.label }}</th>
+                                    <td>{{ order_f.form.price_greater_than }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ order_f.form.date_before.label }}</th>
+                                    <td>{{ order_f.form.date_before }}</td>
+                                    <th>{{ order_f.form.date_after.label }}</th>
+                                    <td>{{ order_f.form.date_after }}</td>
+                                </tr>
+                                <tr>
+                                    <th>{{ order_f.form.order_status.label }}</th>
+                                    <td>{{ order_f.form.order_status }}</td>
+                                </tr>
+                            </table>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-outline-primary">
+                                    Search Orders
+                                </button>
+                                <a href="{% url 'export-to-pdf' %}?{{ request.GET.urlencode }}"
+                                           class="btn btn-outline-secondary">Export To PDF</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <table class="table table-bordered mx-sm-3">
+                    <tr>
+                        <th> Sr No.</th>
+                        <th> Order ID</th>
+                        <th> Order Amount</th>
+                        <th> Order Status</th>
+                        <th>Order Status</th>
+                    </tr>
+
+                    {% for order in order_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ order.order_id }}</td>
+                            <td>{{ order.o_amount }}</td>
+                            <td>{{ order.status }}</td>
+                            <td>{{ order.status }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5"><h3>No Orders</h3></td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+
+            </div>
+        </section>
+    </div>
+{% endblock %}

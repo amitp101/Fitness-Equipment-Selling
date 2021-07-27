@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Site Metas -->
+    <title>Fitness Equipment Shop</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Site Icons -->
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="{% static 'images/user/apple-touch-icon.png' %}">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{% static 'css/user/bootstrap.min.css' %}">
+    <!-- Site CSS -->
+    <link rel="stylesheet" href="{% static 'css/user/style.css' %}">
+    <!-- Responsive CSS -->
+    <link rel="stylesheet" href="{% static 'css/user/responsive.css' %}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/user/custom.css' %}">
+    <script src="https://use.fontawesome.com/474c0a0c36.js"></script>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style type="text/css">
+        .modal-backdrop {
+            z-index: -1;
+        }
+
+        {% block css %}
+        {% endblock %}
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- Start Main Top -->
+<header class="main-header">
+    <!-- Start Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+        <div class="container">
+            <!-- Start Header Navigation -->
+            <div class="navbar-header">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu"
+                        aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
+                </button>
+                <a class="navbar-brand" href="/user"><img src="{% static 'images/user/logo.png' %}" class="logo" alt=""></a>
+            </div>
+            <!-- End Header Navigation -->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbar-menu">
+                <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                    <li class="nav-item"><a class="nav-link" href="/user">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/user/about_us">About Us</a></li>
+                    <li class="dropdown megamenu-fw">
+                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Product</a>
+                        <ul class="dropdown-menu megamenu-content" role="menu">
+                            <li>
+                                <div class="row">
+                                    {% for x in category_all_data %}
+                                        <div class="col-menu col-md-3">
+                                            <h6 class="title">{{ x.cat_name }}</h6>
+                                            <div class="content">
+                                                {% for y in sub_category_data_all %}
+                                                    {% if x.cat_name == y.cat_id.cat_name %}
+                                                        <ul class="menu-col">
+                                                            <li><a href="/user/search/{{ y.s_name }}">{{ y.s_name }}</a>
+                                                            </li>
+
+                                                        </ul>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                    <!-- end col-3 -->
+
+                                </div>
+                                <!-- end row -->
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">SHOP</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/user/cart">Cart</a></li>
+                            <li><a href="/user/checkout">Checkout</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item"><a class="nav-link" href="/user/contact_us">Contact Us</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+
+            <!-- Start Atribute Navigation -->
+            <div class="attr-nav">
+                <ul>
+                    <li class="search"><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+                    <li><a href="/user/cart">
+                        <i class="fa fa-shopping-bag" aria-hidden="true"></i>
+                        <span class="badge">{{ all_cart.count }}</span>
+                    </a></li>
+
+                    {% if user.is_authenticated %}
+
+                        <li><a href=/user/logout>
+                            <i class="fa fa-unlock" aria-hidden="true"></i>
+                            <span class="badge">Logout</span>
+                        </a></li>
+
+                    {% else %}
+
+                        <li><a href="#" data-toggle="modal" data-target="#myModal">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            <span class="badge">Login</span>
+                        </a></li>
+
+                        <li><a href="#" data-toggle="modal" data-target="#myModal1">
+                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            <span class="badge">Registration</span>
+                        </a></li>
+                        <!-- The Modal -->
+                        <div class="modal" id="myModal">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+
+                                    <!-- Modal Header -->
+                                    <div class="modal-header bg-danger">
+                                        <h4 class="modal-title font-weight-bold text-light">Login</h4>
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <!-- Modal body -->
+                                    <div class="modal-body">
+                                        <form action="/user/login" method="POST" autocomplete="off">
+                                            {% csrf_token %}
+                                            {% for message in messages %}
+                                                <div class="alert alert-danger">
+                                                    {{ message }}
+                                                </div>
+                                            {% endfor %}
+                                            <label>Username</label>
+                                            <input type="text" name="username" class="form-control"
+                                                   placeholder="Please Enter username" required>
+
+                                            <label>Password</label>
+                                            <input type="password" name="password" class="form-control"
+                                                   placeholder="Please Enter Password" required>
+                                            <div class="modal-footer mt-2">
+                                                <input type="submit" name="submit" class="btn btn-danger"
+                                                       value="Submit">
+                                                <a href="{% url 'password_reset' %}" class="btn btn-danger">Forget
+                                                    Password</a>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Modal footer -->
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- The Modal -->
+                        <div class="modal" id="myModal1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header bg-danger">
+                                    <center><h4 class="modal-title font-weight-bold text-light">Regestration</h4>
+                                    </center>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <form action="/user/registration" method="POST" enctype="multipart/form-data"
+                                          autocomplete="off">
+                                        {% csrf_token %}
+                                        {% if username_error %}
+                                            <div class="alert alert-danger">
+                                                {{ username_error }}
+                                            </div>
+                                        {% endif %}
+                                        {% if password_error %}
+                                            <div class="alert alert-danger">
+                                                {{ password_error }}
+                                            </div>
+                                        {% endif %}
+                                        <label>Username</label>
+                                        <input type="text" name="username" class="form-control"
+                                               placeholder="Please Enter Your username" required>
+                                        <label>FirstName</label>
+                                        <input type="text" name="firstname" class="form-control"
+                                               placeholder="Please Enter Your first name" required>
+                                        <label>Lastname</label>
+                                        <input type="text" name="lastname" class="form-control"
+                                               placeholder="Please Enter Your last name" required>
+                                        <label>Address:</label>
+                                        <textarea name="address" class="form-control w-50" col="20" rows="5"
+                                                  required></textarea>
+                                        <label>Image:</label>
+                                        <input type="file" name="image" class="form-control w-50"></br>
+                                        <label>Gender:</label>
+                                        <input type="radio" name="gender" value="male">Male
+                                        <input type="radio" name="gender" value="female">Female<br>
+                                        <label>Email</label>
+                                        <input type="email" name="email" class="form-control"
+                                               placeholder="Please Enter Your email name" required>
+                                        <label>Contact Number</label>
+                                        <input type="tel" name="con_no" class="form-control"
+                                               placeholder="Please Enter Your contact number" required>
+                                        <!-- <label>Password</label>
+                                          <input type="password" name="password" class="form-control"placeholder="Please Enter Your password" required>
+                                        <label> Confirm Password</label>
+                                          <input type="password" name="confirm_password" class="form-control" placeholder="Please Enter Your confirm password" required>
+                               -->
+
+                                        <label>Password*</label>
+                                        <input type="password" id="password" name="password" placeholder="Password"
+                                               class="form-control" required>
+                                        <label>Confirm Password*</label>
+                                        <input type="password" id="confirm_password" name="confirm_password" required
+                                               placeholder="Password" class="form-control">
+                                        <div class="registrationFormAlert" style="color:green;" id="CheckPasswordMatch">
+
+
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            <input type="submit" name="submit" class="btn btn-danger" value="submit">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    {% endif %}
+
+                </ul>
+            </div>
+            <!-- End Atribute Navigation -->
+        </div>
+        <!-- Start Side Menu -->
+        <!-- End Side Menu -->
+    </nav>
+    <!-- End Navigation -->
+</header>
+<!-- End Main Top -->
+
+<!-- Start Top Search -->
+<div class="top-search">
+    <div class="container">
+        <div class="input-group">
+            <form action='/user/search_product'>
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" name="search_product" id="search_product" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times-circle"
+                                                                aria-hidden="true"></i></span>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Top Search -->
+
+
+{% block main %}
+{% endblock %}
+
+
+<!-- Start copyright  -->
+<div clas+s="footer-copyright">
+    <p class="footer-company">All Rights Reserved. &copy; 2018 <a href="#">Fitness Equipments</a>
+    </p>
+</div>
+<!-- End copyright  -->
+</body>
+<!-- Start Footer  -->
+<footer>
+    <div class="footer-main">
+        <div>
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-widget">
+                        <h4>About Fitness Equipments</h4>
+                        <ul>
+                            <li>
+                                <p>We Believe in product Quality</p>
+                            </li>
+                            <br>
+                            <li>
+                                <p>Customer Satisfaction Is First Important Objective</p>
+                            </li>
+
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="footer-link-contact">
+                        <h4>Contact Us</h4>
+                        <ul>
+                            <li>
+                                <p><i class="fa fa-map-marker"></i>Address: Michael I. Days 3756 <br>Preston Street
+                                    Wichita,<br> KS 67213 </p>
+                            </li>
+                            <li>
+                                <p><i class="fa fa-phone-square"></i>Phone: <a href="tel:+91-9888705770">9510571686</a>
+                                </p>
+                            </li>
+                            <li>
+                                <p><i class="fa fa-envelope"></i>Email: <a href="mailto:contactinfo@gmail.com">contactinfo@gmail.com</a>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- End Footer  -->
+<a href="#" id="back-to-top" title="Back to top" style="display: none;">&uarr;</a>
+
+<!-- ALL JS FILES -->
+<script src="{% static 'js/user/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'js/user/popper.min.js' %}"></script>
+<script src="{% static 'js/user/bootstrap.min.js' %}"></script>
+<!-- ALL PLUGINS -->
+<script src="{% static 'js/user/jquery.superslides.min.js' %}"></script>
+<script src="{% static 'js/user/bootstrap-select.js' %}"></script>
+<script src="{% static 'js/user/inewsticker.js' %}"></script>
+<script src="{% static 'js/user/bootsnav.js' %}"></script>
+<script src="{% static 'js/user/images-loded.min.js' %}"></script>
+<script src="{% static 'js/user/isotope.min.js' %}"></script>
+<script src="{% static 'js/user/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/user/baguetteBox.min.js' %}"></script>
+<script src="{% static 'js/user/form-validator.min.js' %}"></script>
+<script src="{% static 'js/user/contact-form-script.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#search_product').focusout(function () {
+            var search = $('#search_product').val()
+            var mydata = {search: search}
+            $.ajax(function () {
+                type: "GET",
+                    url
+            :
+                "/user/search_product",
+                    data
+            :
+                mydata,
+                    success
+            :
+
+                function (data) {
+                    console.log("SUCCESS");
+                    alert(data);
+                }
+
+            ,
+                failure: function (data) {
+                    console.log("FAIL");
+                    console.log(data);
+                }
+            ,
+            });
+        });
+
+</script>
+
+<script type="text/javascript">
+    function checkPasswordMatch() {
+        var password = $("#password").val();
+        var confirmPassword = $("#confirm_password").val();
+        if (password != confirmPassword)
+            $("#CheckPasswordMatch").html("Passwords does not match!");
+        else
+            $("#CheckPasswordMatch").html("Passwords matched.");
+    }
+
+    $(document).ready(function () {
+        $("#confirm_password").keyup(checkPasswordMatch);
+    });
+</script>
+</html>

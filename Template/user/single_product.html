@@ -1,0 +1,154 @@
+{% extends 'user/layout/master.html' %}
+{% block main %}
+{% load static %}
+<!-- Start Top Search -->
+<div class="top-search">
+    <div class="container">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="Search">
+            <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+        </div>
+    </div>
+</div>
+<!-- End Top Search -->
+
+<!-- Start All Title Box -->
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Shop Detail</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                    <li class="breadcrumb-item active">Shop Detail</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End All Title Box -->
+{% for x in product_data_show %}
+<!-- Start Shop Detail  -->
+<div class="shop-detail-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-6">
+                <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+                        <div class="carousel-item active"><img class="d-block w-100" src="{{x.p_image}}"
+                                                               alt="First slide"></div>
+
+                    </div>
+                    <a class="carousel-control-prev" href="#carousel-example-1" role="button" data-slide="prev">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carousel-example-1" role="button" data-slide="next">
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <span class="sr-only">Next</span>
+                    </a>
+                    <ol class="carousel-indicators">
+                        <li data-target="#carousel-example-1" data-slide-to="0" class="active">
+                            <img class="d-block w-100 img-fluid" src="images/smp-img-01.jpg" alt=""/>
+                        </li>
+                        <li data-target="#carousel-example-1" data-slide-to="1">
+                            <img class="d-block w-100 img-fluid" src="images/smp-img-02.jpg" alt=""/>
+                        </li>
+                        <li data-target="#carousel-example-1" data-slide-to="2">
+                            <img class="d-block w-100 img-fluid" src="images/smp-img-03.jpg" alt=""/>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="col-xl-7 col-lg-7 col-md-6">
+                <div class="single-product-details">
+                    <h2>{{x.p_name}}</h2>
+                    <h5>₹{{x.p_price}}</h5>
+                    <h4>Short Description:</h4>
+                    <p>{{x.p_desc}}</p>
+                    <ul>
+                        <li>
+
+                        </li>
+                        <form action="/user/cart/{{x.id}}">
+                            <li>
+                                <div class="form-group quantity-box">
+                                    <label class="control-label">Quantity</label>
+                                    <input class="form-control" name="qty" value="1" min="1" max="20" type="number">
+                                </div>
+                            </li>
+                    </ul>
+
+                    <div class="price-box-bar">
+                        <div class="cart-and-bay-btn">
+                            <input type="submit" class="btn hvr-hover" data-fancybox-close="" value="Add to cart">
+                        </div>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <form method="POST">
+        {% csrf_token %}
+        <div class=" form-group quantity-box d-flex justify-content-center">
+            <table class="table table-bordered w-50">
+                <tr>
+                    <th>{{form.rating.label}}</th>
+                    <td>{{form.rating}}</td>
+                </tr>
+                <tr>
+                    <th>{{form.review.label}}</th>
+                    <td>{{form.review}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="price-box-bar">
+              <div class="cart-and-bay-btn">
+                  <center> <input type="submit" class="btn hvr-hover" data-fancybox-close="" value="OK"></center>
+                </div>
+        </div>
+
+
+        
+    </form>
+    <div class="row my-5">
+        <div class="col-lg-12">
+            <div class="title-all text-center">
+                <h1>Featured Products</h1>
+
+            </div>
+
+            <div class="featured-products-box owl-carousel owl-theme">
+                {% for x in product_featured %}
+                <div class="item">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <img src="{{x.p_image}}" class="img-fluid" alt="{{x.p_mage}}" style="height: 250px">
+                            <div class="mask-icon">
+                                <ul>
+                                    <li><a href="{% url 'productView' x.id %}" title="View"><i
+                                            class="fa fa-eye"></i></a></li>
+                                </ul>
+                                <a class="cart" href="#">Add to Cart</a>
+                            </div>
+                        </div>
+                        <div class="why-text">
+                            <h4>{{x.p_name}}</h4>
+                            <h5> ₹{{x.p_price}}</h5>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+    <!-- End Cart -->
+
+    {% endblock %}

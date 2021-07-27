@@ -1,0 +1,49 @@
+{% extends 'admin1/layout/master.html' %}
+
+{% block main %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-10">
+ <div class="card-body">
+                <table class="table table-bordered">
+                 
+                  <thead>                  
+                    <tr>
+
+                      <th>Id</th>
+                      <th>IP</th>
+                      <th>url</th>
+                      <th>Category</th>
+                      <th>Sub category</th>
+                      <th>Product</th>
+                      <th>Created at</th>
+                      <th>Updated at</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1.</td>
+                      <td>12345</td>
+                      <td>http:://www.google.com</td>
+                      <td>Sports</td>
+                      <td>Fitness Accessories</td>
+                      <td>Dumbles</td>
+                      <td>4:59</td>
+                      <td>5:00</td>
+                      <td><a href="" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <a href="" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><</a>
+                        <a href="" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>      
+    </div>
+  </div>
+</div>
+
+{% endblock %}

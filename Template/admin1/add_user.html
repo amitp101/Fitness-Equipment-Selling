@@ -1,0 +1,207 @@
+{% extends 'admin1/layout/master.html' %}
+{% block main %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-2"></div>
+		<div class="col-lg-10">
+{% if customer_data_edit %}
+  {% for x in customer_data_edit %}
+      
+
+      <form action="/admin1/user_edit/{{x.user_id.id}}" method="POST" enctype="multipart/form-data">
+     <table class="table table-bordered">
+               {% csrf_token %}
+               <tr>
+                <th>
+                <label>User Name:</label></th>
+                <td><input type="text" name="username" class="form-control w-50" value="{{x.user_id.username}}" placeholder="Please Enter you Username" readonly></td></tr>
+                <tr><th>
+                <label>First Name:</label></th>
+                <td><input type="text" name="f_name"  value="{{x.user_id.first_name}}"class="form-control w-50" placeholder="Please Enter you Firstname"><br></td></tr>
+                <tr><th>
+                <label>Last Name:</label></th>
+                <td><input type="text" name="l_name" value ="{{x.user_id.last_name}}"class="form-control w-50" placeholder="Please Enter you LastName"><br></td></tr>
+                <tr><th>
+                <label>Gender:</label></th>
+                <td><input type="radio" name="gender" value = "male" class="form-control w-50" {% if x.gender == 'male' %}{{'checked'}}{% endif %}>Male
+                <input type="radio" name="gender" value = "female" class="form-control w-50" {% if x.gender == 'female' %}{{'checked'}}{% endif %}>Female
+                <br></td></tr>
+                <tr><th>
+                <label>Image:</label></th>
+                <td><input type="file" name="image" value="{{x.image}}"class="form-control w-50"></td></tr><br>
+                <tr><th>
+                <label>Address:</label></th>
+                <td><textarea name="address" class="form-control w-50" col="20" rows="5">{{x.address}}</textarea></td></tr>
+                <tr><th>
+                <label>Email:</label></th>
+                <td><input type="email" name="email" value="{{x.email}}" class="form-control"><br></td></tr>
+                <tr><th>
+                <label>Contact Number:</label></th>
+                <td><input type="number" name="con_no" min="10" value="{{x.con_no}}"></td></tr>    
+            
+            </div>
+
+             </table>
+            <div class="modal-footer justify-content-between">
+              <input type="Submit" name="Submit" value="Submit" class="btn btn-success w-50"><br>
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+       </form>
+{% endfor %}
+{% elif user_show1 %}
+
+{% for x in user_show1 %}
+<table class="table table-bordered">
+  <tr>
+    <th>ID:</th>
+    <td>{{x.user_id.id}}</td>
+  </tr>
+
+  <tr>
+    <th>First Name:</th>
+    <td>{{x.user_id.first_name}}</td>
+  </tr>
+
+  <tr>
+    <th>Lasst Name:</th>
+    <td>{{x.user_id.last_name}}</td>
+  </tr>
+
+  <tr>
+    <th>Email:</th>
+    <td>{{x.email}}</td>
+  </tr>
+
+  <tr>
+    <th>Contaact_no:</th>
+    <td>{{x.con_no}}</td>
+  </tr>
+
+  <tr>
+    <th>Image:</th>
+    <td><img src="{{x.image}}"alt="{{x.image}}"style="width: 100px; height: 100px;"></td>
+  </tr>
+</table>
+{% endfor %}
+
+{% else %}
+
+		  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">Add User</button>
+		<div class="modal fade" id="modal-primary">
+        <div class="modal-dialog">
+          <div class="modal-content bg-primary">
+            <div class="modal-header">
+              <h4 class="modal-title">Add user Successfully</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+               <form action="/admin1/add_user" method="POST" enctype="multipart/form-data" autocomplete="off">
+               {% csrf_token %}
+                <label>User Name:</label>
+                <input type="text" name="username" class="form-control w-50" placeholder="Please Enter you Username" required><br>
+                <label>First Name:</label>
+                <input type="text" name="f_name" class="form-control w-50" placeholder="Please Enter you Firstname" required><br>
+                <label>Last Name:</label>
+                <input type="text" name="l_name" class="form-control w-50" placeholder="Please Enter you LastName" required><br>
+                <label>Gender:</label>
+                <input type="radio" name="gender" value="male" class="form-control w-50">Male
+                <input type="radio" name="gender" value="female" class="form-control w-50">Female
+                <br>
+                <label>Image:</label>
+                <input type="file" name="image" class="form-control w-50">
+                <label>Address:</label>
+                <textarea name="address" class="form-control w-50" col="20" rows="5" required></textarea>
+                <label>Email:</label>
+                <input type="email" name="email" class="form-control" required><br>
+                 <label>password:</label>
+                <input type="password" name="password" class="form-control" required><br>
+                <label>Contact Number:</label>
+                <input type="tel" name="con_no" min="10" required><br>
+                <input type="Submit" name="Submit" value="Submit" class="btn btn-success w-50"><br>          
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+
+<br>
+		<div class="container-fluid">
+        <div class="row">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Add User Table</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                      <th>Image</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in customer_data_read %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{x.user_id.first_name}}&nbsp;{{x.user_id.last_name}}</td>
+                     <td>{{x.email}}</td>
+                     <td>{{x.con_no}}</td>
+                     <td><img src="{{x.image}}" alt="{{x.image.url}}" style="width: 100px; height: 100px;"></td>
+                     <td>{{x.status}}</td>
+                     <td><a href="/admin1/user_edit/{{x.user_id.id}}" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                     <a href="/admin1/add_user_delete/{{x.user_id.id}}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                     <a href="/admin1/user_show/{{x.user_id.id}}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                     <a href="/admin1/user_active/{{x.user_id.id}}" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i></a>
+                     <a href="/admin1/user_deactive/{{x.user_id.id}}" class="btn btn-dark"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                     
+
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  {% if customer_data_read.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{customer_data_read.previous_page_number}}">Previous</a></li>
+                  {% endif %}
+
+                  {% for x in customer_data_read.paginator.page_range %}
+                  {% if customer_data_read.number == x%}
+                  <li class="page-item"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% endif %}
+
+                  {% endfor %}
+                  {% if customer_data_read.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{customer_data_read.next_page_number}}">next</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+            <!-- /.card -->
+  {% endif %}
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}

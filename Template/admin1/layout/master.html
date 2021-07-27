@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+  {% load static %}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>fitness | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}">
+  <!-- Tempusdominus Bbootstrap 4 -->
+  <link rel="stylesheet" href="{% static 'css/tempusdominus-bootstrap-4.min.css' %}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{% static 'css/icheck-bootstrap.min.css' %}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{% static 'css/jqvmap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'css/adminlte.css' %}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{% static 'css/OverlayScrollbars.min.css' %}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{% static 'css/daterangepicker.css' %}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{% static 'css/summernote-bs4.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <script src="https://use.fontawesome.com/474c0a0c36.js"></script>
+
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fa fa-bars" aria-hidden="true"></i></a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="{% url 'admin-dashboard' %}" class="nav-link">Home</a>
+      </li>
+      
+       
+    </ul>
+
+    
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+      <!-- Messages Dropdown Menu -->
+      
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'admin-logout' %}">
+          Logout
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="{{request.user.customer_data.image}}" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+          <a href="#" class="d-block"> Fitness Equipment Selling </a>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2" >
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+
+          
+          <li class="nav-item has-treeview">
+            <a href="{% url 'admin-dashboard' %}" class="nav-link">
+              <i class="fa fa-tachometer" aria-hidden="true"></i>
+
+              <p>
+                dashboard
+                
+              </p>
+            </a>
+          </li>
+           
+
+          <li class="nav-item has-treeview">
+            <a href="/admin1/add_user" class="nav-link">
+              <i class="fa fa-user-circle" aria-hidden="true"></i>
+              <p>
+                Add User
+                
+              </p>
+            </a>
+          </li>
+        
+
+         <li class="nav-item has-treeview">
+            <a href="/admin1/category" class="nav-link">
+              <i class="fa fa-bars" aria-hidden="true"></i>
+              <p>
+                category
+               
+              </p>
+            </a>
+          </li>
+           <li class="nav-item has-treeview">
+            <a href="/admin1/sub_category" class="nav-link">
+              <i class="fa fa-tasks" aria-hidden="true"></i>
+              <p>
+                sub_category
+              </p>
+            </a>
+          </li>
+         
+          <li class="nav-item has-treeview">
+            <a href="/admin1/product" class="nav-link">
+              <i class="fa fa-dropbox" aria-hidden="true"></i>
+
+              <p>
+                product
+               
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item has-treeview">
+            <a href="{% url 'order' %}" class="nav-link">
+             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+
+              <p>
+                order
+                
+              </p>
+            </a>
+          </li>
+         
+          <li class="nav-item has-treeview">
+            <a href="/admin1/account" class="nav-link">
+             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+
+              <p>
+                Ordered Items
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="/admin1/payment" class="nav-link">
+              <i class="fa fa-money" aria-hidden="true"></i>
+              <p>
+                payment
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="/admin1/contactus" class="nav-link">
+              <i class="fa fa-phone-square" aria-hidden="true"></i>
+              <p>
+                contactus
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="/admin1/review" class="nav-link">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              <p>
+                review
+                
+              </p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+{% block main %}
+{% endblock %}
+
+
+{% block footer %}
+
+
+
+
+  
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{% static 'js/jquery.min.js' %}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<!-- ChartJS -->
+<script src="{% static 'js/Chart.min.js' %}"></script>
+<!-- Sparkline -->
+<script src="{% static 'js/sparkline.js' %}"></script>
+<!-- JQVMap -->
+<script src="{% static 'js/jquery.vmap.min.js' %}"></script>
+<script src="{% static 'js/jquery.vmap.usa.js' %}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{% static 'js/jquery.knob.min.js' %}"></script>
+<!-- daterangepicker -->
+<script src="{% static 'js/moment.min.js' %}"></script>
+<script src="{% static 'js/daterangepicker.js' %}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{% static 'js/tempusdominus-bootstrap-4.min.js' %}"></script>
+<!-- Summernote -->
+<script src="{% static 'js/summernote-bs4.min.js' %}"></script>
+<!-- overlayScrollbars -->
+<script src="{% static 'js/jquery.overlayScrollbars.min.js ' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'js/adminlte.js' %}"></script>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+<script src="{% static 'js/pages/dashboard.js' %}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{% static 'js/demo.js' %} "></script>
+</body>
+</html>
+{% endblock %}

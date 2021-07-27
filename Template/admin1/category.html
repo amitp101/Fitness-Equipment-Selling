@@ -1,0 +1,121 @@
+{% extends 'admin1/layout/master.html' %}
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-10">
+      `<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-primary">Add Category</button>
+    <div class="modal fade" id="modal-primary">
+        <div class="modal-dialog">
+          <div class="modal-content bg-primary">
+            <div class="modal-header">
+              <h4 class="modal-title">Add Category Successfully</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+               <form action="/admin1/category" method="POST" autocomplete="off">
+               {% csrf_token %}
+                <label>Category Name:</label>
+                <input type="text" name="cat_name" class="form-control w-50" required><br>
+                
+                 <br>          
+              
+            </div>
+            <div class="modal-footer justify-content-between">
+              <input type="Submit" name="Submit" value="Submit" class="btn btn-success w-50">
+              <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+
+             </form>
+          </div>
+          <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+      </div>
+      <!-- /.modal -->
+{% if category_show %}
+<br>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Category Table</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Time</th>
+                      <th>Action</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in category_show %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{x.cat_name}}</td>
+                      <td>{{x.created_at}}</td>
+                      
+                      <td><a href="/admin1/edit/{{x.id}}" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                      <a href="/admin1/cat_delete/{{x.id}}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                   {% if category_show.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{category_show.previous_page_number}}">Previous</a></li>
+                  {% endif %}
+
+                  {% for x in category_show.paginator.page_range %}
+
+                  {% if category_show.number == x %}
+                  <li class="page-item active"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% endif %}
+
+                  {% endfor %}
+                  
+                  {% if category_show.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{category_show.next_page_number}}">Next</a></li>
+                  {% endif %}
+                
+                </ul>
+              </div>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% if  edit_data %}
+    {% for x in edit_data %}
+      <form action="/admin1/cat_data_update/{{x.id}}" method="POST">
+        <table class="table table-bordered">
+               {% csrf_token %}
+               <tr><th>
+                <label>Category Name:</label></th>
+                <td><input type="text" name="cat_name" value = "{{x.cat_name}}"class="form-control w-50"><br></td></tr>
+        </table>
+                
+                 <input type="Submit" name="Submit" value="Submit" class="btn btn-success w-50"><br>
+
+      </form>
+      {% endfor %}
+
+
+{% endif %}
+</div>
+
+{% endblock %}

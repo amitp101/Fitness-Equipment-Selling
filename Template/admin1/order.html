@@ -1,0 +1,80 @@
+{% extends 'admin1/layout/master.html' %}
+{% block main %}
+{% if order_show %}
+{% for x in order_show %}
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-2"></div>
+<div class="col-lg-10">
+<table class="table table-bordered">
+<tr>
+  <th>No</th>
+  <td>{{forloop.counter}}</td> 
+</tr>
+<tr>
+  <th>User</th>
+  <td>{{x.c_id.user_id.first_name}}&nbsp;{{x.c_id.user_id.last_name}}</td>
+</tr>
+<tr>
+  <th>Order Id</th>
+  <td>{{x.order_id}}</td>
+</tr>
+<tr>
+  <th>Payment Status</th>
+  <td>{{x.status}}</td>
+</tr>
+<tr>
+  <th>Amount</th>
+  <td>{{x.o_amount}}</td>
+</tr>
+</table>
+
+
+</div>
+</div>
+</div>
+
+{% endfor %}
+{% else %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-10">
+ <div class="card-body">
+                <table class="table table-bordered">
+                 
+                  <thead>                  
+                    <tr>
+
+                      <th>No</th>
+                      <th>User</th>
+                      <th>Order id</th>
+                      <th>Payment Status </th>
+                      <th>Amount</th>
+                      <th>Time</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in all_order %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{x.c_id.user_id.first_name}}&nbsp;{{x.c_id.user_id.last_name}}</td>
+                      <td>{{x.order_id}}</td>
+                      <td>{{x.status}}</td>
+                      <td>{{x.o_amount}}</td>
+                      <td>{{x.created_at}}</td>
+                      <td><a href="/admin1/order_delete/{{x.id}}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a href="/admin1/order_show/{{x.id}}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>      
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

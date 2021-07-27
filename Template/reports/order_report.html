@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            size: a4 portrait;
+            @frame header_frame { /* Static Frame */
+            -pdf-frame-content: header_content;
+            left: 50pt;
+            width: 512pt;
+            top: 50pt;
+            height: 40pt;
+        }
+        @frame content_frame {
+            /* Content Frame */
+        left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+        }
+        @frame footer_frame {
+            /* Another static Frame */
+        -pdf-frame-content:footer_content;
+        left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+        }
+        }
+
+        .center {
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+            text-align: center;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        tr {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding: 0px;
+        }
+
+        td {
+            margin-top: 50px;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0px;
+        }
+
+        th {
+            vertical-align: middle;
+            height: 30px;
+            text-align: center;
+            vertical-align: middle;
+            background-color: black;
+            color: white;
+            padding: 0px;
+        }
+
+    </style>
+</head>
+
+<body>
+<!-- Content for Static Frame 'header_frame' -->
+<div id="header_content" class="center">
+    <h1>The Way Shop </h1>
+</div>
+
+<!-- Content for Static Frame 'footer_frame' -->
+<div id="footer_content" align="center">(c) - page
+    <pdf:pagenumber>
+        of
+        <pdf:pagecount>
+</div>
+
+<!-- HTML Content -->
+<hr>
+<h3 class="center">Order Table</h3>
+<hr>
+<table>
+    <tr>
+        <th>Sr No</th>
+        <th>Order ID</th>
+        <th>User Name</th>
+        <th>Order Date</th>
+        <th>Order Status</th>
+        <th>Total Price</th>
+    </tr>
+</table>
+<hr>
+<table>
+    {% for order in queryset %}
+        <tr>
+            <td>{{ forloop.counter }} </td>
+            <td>{{ order.id }}</td>
+            <td>{{ order.c_id.user_id.username }}</td>
+            <td>{{ order.created_at }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.o_amount }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<hr>
+
+<p align="right"><strong>Total Orders : {{ queryset.count }}</strong></p>
+</body>
+</html>

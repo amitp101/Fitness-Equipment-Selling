@@ -1,0 +1,96 @@
+{% extends 'admin1/layout/master.html' %}
+
+{% block main %}
+
+{% if account_show %}
+{% for x in account_show %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-10">
+ <div class="card-body">
+
+<table class="table table-bordered">
+<tr>
+  <th>ID:</th>
+  <td>{{forloop.counter}}</td>
+</tr>
+   <tr>
+  <th>Username:</th>
+  <td>{{x.o_id.c_id.user_id.username}}</td>
+</tr>
+<tr>
+  <th>Order ID:</th>
+  <td>{{x.o_id.id}}</td>
+</tr>
+<tr>
+  <tr>
+  <th>Product Name:</th>
+  <td>{{x.p_id.p_name | slice:"0:23"}}</td>
+</tr>
+    <tr>
+  <th>Quantity:</th>
+  <td>{{x.qty}}</td>
+</tr>
+<tr>
+  <th>Price:</th>
+  <td>{{x.amount}}</td>
+</tr>
+
+  <th>Product Image:</th>
+  <td><img src="{{x.p_id.p_image}}"alt="{{x.p_id.p_image}}" style="width :100px; height:100px;"></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+{% endfor %}
+{% else %}
+
+
+
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-10">
+ <div class="card-body">
+                <table class="table table-bordered">
+                 
+                  <thead>                  
+                    <tr>
+
+                      <th>ID</th>
+                      <th>Product Name</th>
+                      <th>Product Image</th>
+                      <th>Quantity</th>
+                      <th>Total Price</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in account_dat_store %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{x.p_id.p_name}}</td>
+                      <td><img src="{{x.p_id.p_image}}" alt="{{x.p_id.p_image}}" style="width: 100px; height: 100px;"></td>
+                      <td>{{x.qty}}</td>
+                      <td>{{x.amount}}</td>
+                      <td>
+                      <a href="/admin1/account_show/{{x.id}}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                        
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>    
+
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

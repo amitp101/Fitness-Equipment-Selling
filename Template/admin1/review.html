@@ -1,0 +1,84 @@
+{% extends 'admin1/layout/master.html' %}
+
+{% block main %}
+{% if review_show %}
+{% for x in review_show%}
+
+<div class="container-fluid">
+<div class="row">
+<div class="col-lg-2"></div>
+<div class="col-lg-10">
+  <table class="table table-bordered">
+  <tr>
+    <th>No</th>
+    <td>{{forloop.counter}}</td>
+  </tr>
+  <tr>
+    <th>Product Name:</th>
+     <td>{{x.p_id.p_name}}</td>
+</tr>
+<tr>
+    <th>User :</th>
+    <td>{{x.c_id.user_id}}</td>
+</tr>
+<tr>
+    <th>Review:</th>
+    <td>{{x.review}}</td>
+</tr>
+  <tr>
+    <th>Rating:</th>
+     <td>{{x.rating}}</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+{% endfor %}
+{% else %}
+
+        
+  
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-10">
+ <div class="card-body">
+                <table class="table table-bordered">
+                 
+                  <thead>                  
+                    <tr>
+
+                      <th>No</th>
+                      <th>Product Name</th>
+                      <th>User</th>
+                      <th>Review</th>
+                      <th>Rating</th>
+                      <th>Time</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in review %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{x.p_id.p_name}}</td>
+                      <td>{{x.c_id.user_id}}</td>
+                      <td>{{x.review}}</td>
+                      <td>{{x.rating}}</td>
+                      <td>{{x.created_at}}</td>
+                      <td><a href="" class="btn btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+                        <a href="" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a href="/admin1/review_show/{{x.id}}" class="btn btn-warning"><i class="fa fa-eye" aria-hidden="true"></i></a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>      
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

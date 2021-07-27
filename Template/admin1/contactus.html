@@ -1,0 +1,171 @@
+{% extends 'admin1/layout/master.html' %}
+{% block main %}
+
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-2"></div>
+           <div class="col-lg-10">
+             
+              <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Contact_Us Table</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+               
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th>No</th>
+                      <th>Name</th>
+                      <th>Subject</th>
+                      <th>MSG</th>
+                      <th>Reply</th>
+                      
+                             
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in all_reply %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{x.contact_us.name}}</td>
+                      <td>{{x.contact_us.subject}}</td>
+                      <td>{{x.contact_us.msg}}</td>
+                      <td>{{x.reply}}</td>
+                      
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  {% if all_reply.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{all_reply.previous_page_number}}">Previous</a></li>
+                  {% endif %}
+
+                  {% for x in all_reply.paginator.page_range %}
+
+                  {% if  all_reply.number == x %}
+                  <li class="page-item"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% endif %}
+
+                  {% endfor %}
+
+                  {% if all_reply.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{all_reply.next_page_number}}">Next</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+
+            <!-- contact us -->
+    
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Contact_Us Table</h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+               
+                <table class="table table-bordered">
+                  <thead>                  
+                    <tr>
+                      <th>No</th>
+                      <th>Name</th>
+                      <th>Subject</th>
+                      <th>Email</th>
+                      <th>Msg</th>
+                      <th>Contact Number</th>
+                      <th>Action</th>       
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for x in all_contact %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{x.name}}</td>
+                      <td>{{x.subject}}</td>
+                      <td>{{x.email}}</td>
+                      <td>{{x.msg}}</td>
+                      <td>{{x.con_no}}</td>
+                    <td>
+                     <a href="/admin1/contactus_delete/{{x.id}}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                     <a href="#" data-toggle="modal" data-target="#modal-primary" class="btn btn-danger"><i class="fa fa-reply-all" aria-hidden="true"></i></a>
+                     <div class="modal fade" id="modal-primary">
+                  <div class="modal-dialog">
+                    <div class="modal-content bg-primary">
+                      <div class="modal-header">
+                        <h4 class="modal-title"> Contact Us Successfully</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                      </div>
+                      <div class="modal-body">
+                         <form action="/admin1/reply/{{x.id}}" method="POST">
+                         {% csrf_token %}
+                         <label>Email : {{x.email}}</label> <br/>
+                         <input type="hidden" value="{{x.email}}" name="email">
+                          <label>Reply:</label>
+                          <textarea name="reply" class="form-control w-100" rows="10">
+                            
+                          </textarea>
+                          
+                          
+                           <br>          
+              
+            </div>
+            <div class="modal-footer justify-content-between">
+              <input type="Submit" name="Submit" value="Submit" class="btn btn-success w-50">
+              
+            </div>
+             </form>
+          </div>
+        </div>
+      </div>
+    
+                   </td>
+
+                     
+
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- /.card-body -->
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                  {% if all_contact.has_previous %}
+                  <li class="page-item"><a class="page-link" href="?page={{all_contact.previous_page_number}}">Previous</a></li>
+                  {% endif %}
+
+                  {% for x in all_contact.paginator.page_range %}
+
+                  {% if  all_contact.number == x %}
+                  <li class="page-item"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{x}}">{{x}}</a></li>
+                  {% endif %}
+
+                  {% endfor %}
+
+                  {% if all_contact.has_next %}
+                  <li class="page-item"><a class="page-link" href="?page={{all_contact.next_page_number}}">Next</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+            <!-- /.card -->
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

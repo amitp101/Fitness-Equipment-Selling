@@ -1,0 +1,161 @@
+{% extends 'user/layout/master.html' %}
+
+
+{% block css %}
+    /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+{% endblock %}
+{% block main %}
+    {% load static %}
+    {% load mlt_tag %}
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Cart</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">Cart</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Product Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for x in all_cart %}
+                                <tr class="mx-auto">
+                                    <td class="thumbnail-img">
+                                        <a href="#">
+                                            <img class="img-fluid" src="{{ x.p_id.p_image }}" alt=""/>
+                                        </a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="#">
+                                            {{ x.p_id.p_name }}
+                                        </a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p id="price_final{{ forloop.counter }}">{{ x.p_id.p_price }}</p>
+                                    </td>
+                                    <td class="quantity-box">
+                                        <button type="button" class="btn minuscart" id="{{ x.p_id.id }}"
+                                                value="{{ x.id }}"><i class="fa fa-minus"></i></button>
+                                        <input type="number" size="4" value="{{ x.quantity }}"
+                                               id="qty{{ x.p_id.id }}"
+                                               min="1" step="1" class="c-input-text qty text w-auto"
+                                               name="quantity" readonly>
+                                        <button type="button" class="btn pluscart" id="{{ x.p_id.id }}"
+                                                value="{{ x.id }}"><i class="fa fa-plus"></i></button>
+                                    </td>
+                                    <td class="total-pr ml-3">
+                                        <p><span id="total_price{{ x.p_id.id }}">{{ x.order_price }}</span>/-</p>
+
+                                    </td>
+                                    <td class="remove-pr">
+                                        <a href="/user/cart_delete/{{ x.id }}">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row my-5">
+                <div class="col-lg-8 col-sm-12"></div>
+                <div class="col-lg-4 col-sm-12">
+
+
+                    <div class="d-flex gr-total">
+                        <h5>Grand Total</h5>
+                        <div class="ml-auto font-weight-bold"><span id="grand_total">{{ grand_total }}</span>/-</div>
+                    </div>
+
+
+                </div>
+                <p id="user_info" style="display: none;">{{ request.user.id }}</p>
+                <div class="col-12 d-flex shopping-box"><a href="/user/checkout" id="checkout"
+                                                           class="ml-auto btn hvr-hover">Checkout</a></div>
+            </div>
+
+        </div>
+    </div>
+    <!-- End Cart -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        $('.minuscart').on('click', function () {
+            var cartid = this.id;
+            $.ajax(
+                {
+                    type: "GET",
+                    url: 'sub-q/' + cartid,
+                    data: {},
+                    success: function (data) {
+                        document.getElementById('qty' + cartid).setAttribute("value", data[0])
+                        document.getElementById('total_price' + cartid).innerHTML = data[1]
+                        document.getElementById('grand_total').innerHTML = data[2]
+                    }
+                })
+        });
+        $('.pluscart').on('click', function () {
+            var cartid = this.id;
+            $.ajax(
+                {
+                    type: "GET",
+                    url: 'add-q/' + cartid,
+                    data: {},
+                    success: function (data) {
+                        document.getElementById('qty' + cartid).setAttribute("value", data[0])
+                        document.getElementById('total_price' + cartid).innerHTML = data[1]
+                        document.getElementById('grand_total').innerHTML = data[2]
+                    }
+                })
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            size: a4 portrait;
+            @frame header_frame { /* Static Frame */
+            -pdf-frame-content: header_content;
+            left: 50pt;
+            width: 512pt;
+            top: 50pt;
+            height: 40pt;
+        }
+        @frame content_frame {
+            /* Content Frame */
+        left: 50pt; width: 512pt; top: 90pt; height: 632pt;
+        }
+        @frame footer_frame {
+            /* Another static Frame */
+        -pdf-frame-content:footer_content;
+        left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+        }
+        }
+
+        .center {
+            margin: auto;
+            width: 50%;
+            padding: 10px;
+            text-align: center;
+        }
+
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        tr {
+            margin-top: 50px;
+            margin-bottom: 50px;
+            padding: 0px;
+        }
+
+        td {
+            margin-top: 50px;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0px;
+        }
+
+        th {
+            vertical-align: middle;
+            height: 30px;
+            text-align: center;
+            vertical-align: middle;
+            background-color: black;
+            color: white;
+            padding: 0px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div style="text-align: center;">
+    <h1 class="brand-name">The Way Shop</h1>
+</div>
+<header class="clearfix">
+    <h1>INVOICE</h1>
+    <div id="company" class="clearfix">
+        <div>Fitness</div>
+        <div><a href="mailto:company@example.com">thewayshop@gmail.com</a></div>
+        <div><a href="www.wondershop.in:8000">www.thewayshop.in:</a></div>
+    </div>
+    <div id="project">
+        <div><span>CLIENT:</span> {{order_detail.c_id.f_name}} {{order_detail.c_id.l_name}}</div>
+        <div><span>EMAIL:</span> <a href="mailto:{{order_detail.c_id.email}}">{{order_detail.c_id.email}}</a></div>
+        <div><span>DATE:</span> {{order_detail.created_at}}</div>
+        <div><span>INVOICE ID:</span> {{order_detail.id}}</div>
+        <div><span>TRANSACTION ID:</span> {{order_detail.order_id}}</div>
+    </div>
+    <br>
+    <br>
+</header>
+<!-- Content for Static Frame 'footer_frame' -->
+<div id="footer_content" align="center">(c) - page
+    <pdf:pagenumber>
+        of
+        <pdf:pagecount>
+</div>
+
+<!-- HTML Content -->
+<hr>
+<h3 class="center">Order Table</h3>
+<hr>
+<table>
+    <tr>
+        <th>Order ID</th>
+        <th>User Name</th>
+        <th>Order Date</th>
+        <th>Order Status</th>
+        <th>Total Price</th>
+    </tr>
+</table>
+<hr>
+<table>
+        <tr>
+            <td>{{ order_detail.id }}</td>
+            <td>{{ order_detail.c_id.user_id.username }}</td>
+            <td>{{ order_detail.created_at }}</td>
+            <td>{{ order_detail.status }}</td>
+            <td>{{ order_detail.o_amount }}</td>
+        </tr>
+</table>
+
+<br>
+<br>
+<br>
+
+<hr>
+<h3 class="center">Order Table</h3>
+<hr>
+
+<table>
+    <tr>
+        <th>Order Item ID</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+        <th>Total Item Price</th>
+    </tr>
+</table>
+<hr>
+<table>
+    {% for o_i in order_item_data %}
+        <tr>
+            <td>{{ o_i.id }}</td>
+            <td>{{ o_i.p_id.p_name }}</td>
+            <td>{{ o_i.qty }}</td>
+            <td>{{ o_i.amount }}/-</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<hr>
+</body>
+</html>
